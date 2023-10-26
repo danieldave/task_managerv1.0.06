@@ -1,0 +1,52 @@
+{% extends 'manager/main.html' %}
+{% block content %}
+
+
+<div class="header-bar">
+    <div>
+        <h1>Welcome {{request.user|title}}</h1>
+        <p>Office of {{ request.user.office }}</p>
+        <!-- <h3 style="margin: 0;"> You have <i>{{count}}</i> incomplete task{{count|pluralize:"s"}}</h3> -->
+        <h3 style="margin: 0;"> You have <i>{{count}}</i> incomplete task{{count|pluralize}}</h3>
+
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+        {% else%}
+        <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+      
+    </div>
+</div>
+
+
+<h1>
+    My Task Manager
+</h1>
+<a href="{% url 'task-create' %}">Create New Task</a>
+
+
+<form action="" method="get">
+    <input type="text" name="search-area" value="{{search_input}}">
+    <input type="submit" value="Search">
+</form>
+<table>
+    <tr>
+        <th>Tasks</th>
+    </tr>
+    {% for task in tasks%}
+    <tr>
+        <td>{{task.title}}</td >
+        <td><a href="{% url 'task' task.id %}">View  </a></td>
+        <td><a href="{% url 'task-update' task.id %}">Edit  </a></td>
+        <td><a href="{% url 'task-delete' task.id %}">Delete  </a></td>
+    </tr>
+    {% empty %}
+    <h3>
+        No Task in Manager
+    </h3>
+    {% endfor %}
+</table>
+
+{% endblock content %}

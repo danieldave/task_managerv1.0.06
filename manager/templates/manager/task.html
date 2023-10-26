@@ -1,0 +1,19 @@
+{% extends 'manager/main.html' %}
+{% block content %}
+
+
+<h3>Task Title: {{ task.title }}</h3>
+<h3>Task Description: {{ task.description }}</h3>
+<p>Assigned by: {{ task.sender.username }}</p>
+<p>Created Date: {{ task.created_at }}</p>
+<p>Due Date: {{ task.due_date }}</p>
+<p>Priority: {{ task.get_priority_display }}</p>
+<div class="{% if task.priority == 'High' %}high-priority{% elif task.priority == 'Medium' %}medium-priority{% elif task.priority == 'Low' %}low-priority{% endif %}">
+    <!-- Other task details -->
+</div>
+
+
+<a href="{% url 'tasks' %}">Back</a>
+
+{% endblock content %}
+
